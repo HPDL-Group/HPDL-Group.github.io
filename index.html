@@ -133,21 +133,71 @@
 
 
 <details open="" style="margin-bottom: 10px;">
-    <summary><b>面向智能模型的并行训练优化技术</b></summary>
+    <summary><b>高效能智能加速器体系结构</b></summary>
     <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
     <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p>
-    <ul>
+    <!-- <ul>
         <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
         <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
         <li style="padding: 2px 0px;"> Zhuochen Fan, Zhongxian Liang, Zirui Liu, Dayu Wang, Dong Wen, Wenjun Li, <span>&nbsp;</span><u>Tong Yang</u>, Yuzhou Liu, Weizhe Zhang. PBSketch: Finding Periodic Burst Items in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
         <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
         <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
-    </ul>
+    </ul> -->
 </details>
 
         
+<details open="" style="margin-bottom: 10px;">
+    <summary><b>大规模智能计算系统的异构并行架构</b></summary>
+    <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
+    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p>
+    <!-- <ul>
+        <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Zhuochen Fan, Zhongxian Liang, Zirui Liu, Dayu Wang, Dong Wen, Wenjun Li, <span>&nbsp;</span><u>Tong Yang</u>, Yuzhou Liu, Weizhe Zhang. PBSketch: Finding Periodic Burst Items in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
+    </ul> -->
+</details>
 
+        
+<details open="" style="margin-bottom: 10px;">
+    <summary><b>面向智能模型的并行训练优化技术</b></summary>
+    <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
+    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p>
+    <!-- <ul>
+        <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Zhuochen Fan, Zhongxian Liang, Zirui Liu, Dayu Wang, Dong Wen, Wenjun Li, <span>&nbsp;</span><u>Tong Yang</u>, Yuzhou Liu, Weizhe Zhang. PBSketch: Finding Periodic Burst Items in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
+    </ul> -->
+</details>
 
+<details open="" style="margin-bottom: 10px;">
+    <summary><b>面向图数据的并行训练优化技术</b></summary>
+    <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
+    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p>
+    <!-- <ul>
+        <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Zhuochen Fan, Zhongxian Liang, Zirui Liu, Dayu Wang, Dong Wen, Wenjun Li, <span>&nbsp;</span><u>Tong Yang</u>, Yuzhou Liu, Weizhe Zhang. PBSketch: Finding Periodic Burst Items in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
+    </ul> -->
+</details>
+
+<details open="" style="margin-bottom: 10px;">
+    <summary><b>智能模型分布式训练的优化算法</b></summary>
+    <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
+    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p>
+    <!-- <ul>
+        <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Zhuochen Fan, Zhongxian Liang, Zirui Liu, Dayu Wang, Dong Wen, Wenjun Li, <span>&nbsp;</span><u>Tong Yang</u>, Yuzhou Liu, Weizhe Zhang. PBSketch: Finding Periodic Burst Items in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
+    </ul> -->
+</details>
 
 
     </article>
