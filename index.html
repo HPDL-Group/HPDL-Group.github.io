@@ -24,12 +24,12 @@
         <header class="gdoc-header">
     <div class="container flex align-center justify-between">
         
-        <label for="menu-control" class="gdoc-nav__control">
+        <!-- <label for="menu-control" class="gdoc-nav__control">
             <svg class="icon menu"><use xlink:href="#menu"></use></svg>
             <svg class="icon arrow-back"><use xlink:href="#arrow_back"></use></svg>
-        </label>
+        </label> -->
         
-        <a class="gdoc-header__link" href="https://yangtonghome.github.io/">
+        <a class="gdoc-header__link" href="https://HPDL-group.github.io/">
             <span class="gdoc-brand flex align-center">
                 <!-- <img class="gdoc-brand__img" src="/111.png" alt="Homepage" width=60 height=60> -->
                 <!-- <p>李东升团队国家杰出青年科学基金项目结题成果科普性介绍</p> -->
@@ -68,10 +68,10 @@
                         <span class="breadcrumb">
                             <svg class="icon path"><use xlink:href="#path"></use></svg>
                             <a href='/' class="breadcrumb-link button">首页</a>
-                            <a href='/talks.html' class="breadcrumb-link button">展示成果一</a>
+                            <a href='/news.html' class="breadcrumb-link button">展示成果一</a>
                             <a href='/news.html' class="breadcrumb-link button">展示成果二</a>
-                            <a href='/photos.html' class="breadcrumb-link button">展示成果三</a>
-                            <a href='/talks.html' class="breadcrumb-link button">展示成果四</a>
+                            <a href='/news.html' class="breadcrumb-link button">展示成果三</a>
+                            <a href='/news.html' class="breadcrumb-link button">展示成果四</a>
                             <a href='/news.html' class="breadcrumb-link button">展示成果五</a>
                         </span>
                     </span>
@@ -90,7 +90,7 @@
 
 <div style="float:left; clear:both;" align="left">
 
-<p>本项目来源于国家杰出青年科学基金项目“################（编号#############）”,起止时间2021.1-2025.12。本项目工作概括如下:</p>
+<p>本项目来源于国家杰出青年科学基金项目“并行与分布式计算（编号#############）”,起止时间2021.1-2025.12。本项目工作概括如下:</p>
     
 <!-- <p>3）面向智能模型的并行训练优化技术
 （1~2段总结, 包含下面各项成果如何与合同内容对应）
@@ -129,14 +129,19 @@
 </ul> -->
 
 
-<div class="gdoc-page__anchorwrap"><h2 id="research"><strong>Research:</strong><a data-clipboard-text="https://yangtonghome.github.io/#research" class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor <strong>Research:</strong>" href="#research"><svg class="icon link"><use xlink:href="#link"></use></svg></a></h2></div>
+<div class="gdoc-page__anchorwrap"><h2 id="research"><strong>主要研究内容:</strong></h2></div>
+
+<p>项目包括三项主要研究内容：1）高效能智能加速器体系结构；2）大规模智能计算系统的异构并行架构；3）机器学习训练的可扩展并行优化技术。</p>
 
 
+<!-- 1）高效能智能加速器体系结构 
+当前，采用定制架构的智能加速器的算力不断提升，但计算单元和存储器的性能差距明显，智能加速器面临的“存储墙”问题日益突出。
+项目将分析典型智能算法及应用的计算特性，探索基于存内计算等新型架构的高效能智能加速器技术，分析DRAM和NVM等存储器件的电气特性，研究基于存储器件的智能处理算子操作的计算逻辑实现技术，支持智能计算典型算子的高效计算；研究面向领域的智能加速器软硬件协同设计技术，研究面向智能算法的定制逻辑设计、智能算法和计算逻辑的协同优化、智能加速器内部互连等技术，支持高效能的智能加速计算。 -->
 
 <details open="" style="margin-bottom: 10px;">
-    <summary><b>高效能智能加速器体系结构</b></summary>
-    <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
-    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p>
+    <summary><b>1）高效能智能加速器体系结构 </b></summary>
+    <p>当前，采用定制架构的智能加速器的算力不断提升，但计算单元和存储器的性能差距明显，智能加速器面临的“存储墙”问题日益突出。</p>
+    <p>项目将分析典型智能算法及应用的计算特性，探索基于存内计算等新型架构的高效能智能加速器技术，分析DRAM和NVM等存储器件的电气特性，研究基于存储器件的智能处理算子操作的计算逻辑实现技术，支持智能计算典型算子的高效计算；研究面向领域的智能加速器软硬件协同设计技术，研究面向智能算法的定制逻辑设计、智能算法和计算逻辑的协同优化、智能加速器内部互连等技术，支持高效能的智能加速计算。</p>
     <!-- <ul>
         <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
         <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
@@ -144,68 +149,77 @@
         <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
         <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
     </ul> -->
+</details>
+
+
+<details open="" style="margin-bottom: 10px;">
+    <summary><b>2）大规模智能计算系统的异构并行架构  </b></summary>
+
+<p>智能计算应用类型多样，通用处理器和定制加速器结合的异构并行架构是提高智能计算系统灵活性和效能的重要途径。</p>
+<p>项目将研究通用处理器与专用加速器协作的异构并行计算结点架构、弹性可扩展的互连架构、高性能多级协同存储架构等，通过存储/计算/网络通信架构的紧密耦合和协同，提升大规模智能计算系统的性能和效能。针对大规模智能计算系统网络流量不均衡和周期性的特点，项目将研究在智能计算系统的机架间引入光交换技术，研究光电混合的高效弹性可扩展互连架构，支持在机架间动态按需建立光交换链接，提升互连架构的带宽和灵活性。</p>
+<p>针对机器学习模型参数和样本数据对高性能存储的需求，结合PIM和NVM等技术的进展，研究高性能多级并行存储架构和优化技术，支持加速器存储、内存存储、持久性存储等多级存储资源的协同管理和高性能访问。</p>
+</details>
+
+<details open="" style="margin-bottom: 10px;">
+    <summary><b>3）机器学习训练的可扩展并行优化技术  </b></summary>
+<p>针对大型机器学习训练的模型参数多、多次迭代、参数更新频繁等特点，对CNN、RNN、GNN等典型机器学习模型训练中的计算模式、参数交换和数据依赖等特点进行深入测量分析研究。</p>
+<p>在此基础上，研究新型去中心化的参数通信架构模型，设计分布式机器学习训练的新型优化算法，研究互连拓扑感知的参数通信分组架构，设计高效的组内环状参数交换机制和组间异步更新方法；研究稀疏模型的参数聚合通信优化机制和混合精度训练方法，设计模型参数的传输加速机制，研究基于流水线调度引擎的参数通信隐藏技术，提高参数通信性能；研究异构环境下机器学习训练的数据并行和模型并行策略，设计大型机器学习模型训练的内存划分优化技术，支持训练过程中的数据/模型混合并行，减少训练过程中的内存存储空间和访问开销，提升并行训练效率；研究机器学习基础算子的并行加速方法，设计节点内异构处理单元间的任务划分与负载平衡方法，提高机器学习训练的性能。</p>
+<p>项目将依托所在单位的异构集群（300多个结点）、国家超算天津中心的大规模实验环境（上千个异构结点）和天河超算系统（数万个结点），设计开发原型系统，采取理论分析、实验评估和原型系统实践测量相结合的研究方法，不断迭代改进项目研究成果，推进项目研究深入开展。</p>
+</details>
+
+
+
+<div class="gdoc-page__anchorwrap"><h2 id="research"><strong>项目成果展示:</strong></h2></div>
+
+
+<details open="" style="margin-bottom: 10px;">
+    <summary><b>（一）高效能智能加速器体系结构</b></summary>
+    <!-- <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
+    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p> -->
+    <!-- <ul>
+        <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Zhuochen Fan, Zhongxian Liang, Zirui Liu, Dayu Wang, Dong Wen, Wenjun Li, <span>&nbsp;</span><u>Tong Yang</u>, Yuzhou Liu, Weizhe Zhang. PBSketch: Finding Periodic Burst Items in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
+        <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
+    </ul> -->
+    <p><a href='/news.html' class="breadcrumb-link button">展示成果一</a></p>
 </details>
 
         
 <details open="" style="margin-bottom: 10px;">
-    <summary><b>大规模智能计算系统的异构并行架构</b></summary>
-    <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
-    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p>
-    <!-- <ul>
-        <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Zhuochen Fan, Zhongxian Liang, Zirui Liu, Dayu Wang, Dong Wen, Wenjun Li, <span>&nbsp;</span><u>Tong Yang</u>, Yuzhou Liu, Weizhe Zhang. PBSketch: Finding Periodic Burst Items in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
-    </ul> -->
+    <summary><b>（二）大规模智能计算系统的异构并行架构</b></summary>
+    <!-- <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
+    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p> -->
+    <p><a href='/news.html' class="breadcrumb-link button">展示成果二</a></p>
 </details>
 
         
 <details open="" style="margin-bottom: 10px;">
-    <summary><b>面向智能模型的并行训练优化技术</b></summary>
+    <summary><b>（三）面向智能模型的并行训练优化技术</b></summary>
     <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
     <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p>
-    <!-- <ul>
-        <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Zhuochen Fan, Zhongxian Liang, Zirui Liu, Dayu Wang, Dong Wen, Wenjun Li, <span>&nbsp;</span><u>Tong Yang</u>, Yuzhou Liu, Weizhe Zhang. PBSketch: Finding Periodic Burst Items in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
-    </ul> -->
+    <p><a href='/news.html' class="breadcrumb-link button">展示成果三</a></p>
 </details>
 
 <details open="" style="margin-bottom: 10px;">
-    <summary><b>面向图数据的并行训练优化技术</b></summary>
-    <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
-    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p>
-    <!-- <ul>
-        <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Zhuochen Fan, Zhongxian Liang, Zirui Liu, Dayu Wang, Dong Wen, Wenjun Li, <span>&nbsp;</span><u>Tong Yang</u>, Yuzhou Liu, Weizhe Zhang. PBSketch: Finding Periodic Burst Items in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
-    </ul> -->
+    <summary><b>（四）面向图数据的并行训练优化技术</b></summary>
+    <!-- <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
+    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p> -->
+    <p><a href='/news.html' class="breadcrumb-link button">展示成果四</a></p>
 </details>
 
 <details open="" style="margin-bottom: 10px;">
-    <summary><b>智能模型分布式训练的优化算法</b></summary>
-    <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
-    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p>
-    <!-- <ul>
-        <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Zhuochen Fan, Zhongxian Liang, Zirui Liu, Dayu Wang, Dong Wen, Wenjun Li, <span>&nbsp;</span><u>Tong Yang</u>, Yuzhou Liu, Weizhe Zhang. PBSketch: Finding Periodic Burst Items in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
-        <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
-    </ul> -->
+    <summary><b>（五）智能模型分布式训练的优化算法</b></summary>
+    <!-- <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
+    <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p> -->
+    <p><a href='/news.html' class="breadcrumb-link button">展示成果五</a></p>
 </details>
 
 
     </article>
 
-                
-
-
+            
 
 
 
