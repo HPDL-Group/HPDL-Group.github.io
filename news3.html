@@ -83,7 +83,7 @@
                         <h4><i>i．</i>一种数据并行的多链路并发通信优化技术</h4>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据并行是大规模分布式训练中最基础且广泛应用的并行模式，其核心在于通过全局梯度同步实现模型参数的一致性更新。进一步地，分片数据并行技术（如微软提出的ZeRO技术、Meta提出的FSDP技术）则通过将模型状态分片存储于不同设备，有效缓解了单设备的内存压力，已成为大规模数据并行训练的常用技术。然而，其依赖的AllGather/ReduceScatter等集合通信原语在大规模集群中会引发严重通信瓶颈。现有方法通常利用单一高速链路（如NVLink）进行通信，而忽略集群中同时存在的多层级互连（如PCIe、InfiniBand），导致网络链路资源闲置，无法充分发挥硬件潜力。</p>
                         <div style="text-align: center; margin: 10px 0;">
-                            <img src="fig/HSDP.png" alt="细粒度参数分片与多链路并发的通信优化技术HSDP" style="max-width: 50%; border: 0px solid #ccc; padding: 5px;">
+                            <img src="tags/HSDP.png" alt="细粒度参数分片与多链路并发的通信优化技术HSDP" style="max-width: 50%; border: 0px solid #ccc; padding: 5px;">
                             <p style="font-style: italic; color: #666;">图1：细粒度参数分片与多链路并发的通信优化技术HSDP</p>
                         </div>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目研究提出了一种细粒度参数分片与多链路并发的通信优化技术HSDP，其核心创新在于突破传统分片数据并行技术中所有参数采用统一分片策略的局限，支持不同参数依据所在设备间的可用链路独立分片。HSDP针对各类链路分别构建独立通信组，使不同参数的通信任务可在不同链路上并行执行；同时通过设计通信原语的可交换性，例如允许ReduceScatter与AllReduce的执行顺序灵活调整，进一步提升通信操作执行的灵活性。此外，HSDP引入自动化规划器，通过构建涵盖多链路带宽、启动开销与并发冲突的成本模型，将最优分片策略的搜索转化为混合整数线性规划问题，从而自动求解最佳参数分配方案。在LLaMA、GPT等主流智能模型训练任务上的实验结果显示，相较于ZeRO、FSDP和MiCS等方法，HSDP可实现最高1.30倍的端到端训练加速，且在50Gbps低带宽InfiniBand环境下优势更为突出。该研究系统性挖掘了分片数据并行场景下多链路并发通信的潜力，为去中心化、拓扑感知的通信优化提供了新范式。</p>
@@ -92,7 +92,7 @@
                         <h4><i>ii．</i>一种混合并行的通信内存联合优化技术</h4>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;随着智能模型的层数逐渐加深，数据并行和流水线并行相结合的混合并行训练已成为大规模智能模型并行训练的重要方式。混合训练中通信模式较为复杂，其既包含AllReduce梯度同步，也包含激活值和梯度点对点传输，还可能涉及稀疏数据的通信。通信调度技术通过重叠通信与计算操作，提高并行训练的性能。然而，针对混合并行训练的通信调度技术面临通信操作种类繁多、数据依赖复杂及拓扑利用率低等挑战，导致通信无法有效隐藏，成为性能瓶颈。</p>
                         <div style="text-align: center; margin: 10px 0;">
-                            <img src="fig/TriRace.png" alt="拓扑感知的多维通信调度技术TriRace" style="max-width: 50%; border: 0px solid #ccc; padding: 5px;">
+                            <img src="tags/TriRace.png" alt="拓扑感知的多维通信调度技术TriRace" style="max-width: 50%; border: 0px solid #ccc; padding: 5px;">
                             <p style="font-style: italic; color: #666;">图2：拓扑感知的多维通信调度技术TriRace</p>
                         </div>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;面向复杂网络拓扑与混合并行场景下的多维通信调度难题，项目研究提出了拓扑感知的多维通信调度技术TriRace，如图 2所示，其核心为三维通信调度技术和拓扑感知的通信操作执行方法。面向混合并行训练，TriRace提出的三维通信调度从三个正交维度协同调度通信操作：AllReduce调度利用并行训练中固有的权重更新延迟窗口，将数据并行的梯度通信重叠到后续多个迭代的前向计算中；稀疏数据调度基于下一迭代的输入预取信息区分必须提前通信与可延迟通信的稀疏梯度子集，减少训练关键路径上的通信量；点对点通信调度则将双向点对点通信解耦为两个单向操作，优先保障关键路径上的单向通信，其余通信异步执行以避免阻塞。此外，TriRace拓扑感知的通信操作执行方法通过离线分析通信操作的网络链路使用情况，为不同类型通信分配全局优先级，并在运行时进行动态调度以网络避免链路竞争，从而提高了智能训练通信操作的效率。在BERT、GPT等智能模型训练任务上，TriRace相比Pipedream-2BW和Megatron-LM等方法可以实现1.07至1.45倍的训练吞吐量提升。该研究的拓扑感知调度思想有效解决了多种类通信原语的协同优化难题，显著提升了去中心化架构下通信与计算操作的重叠效率，为大规模训练提供了关键通信加速能力。</p>
@@ -101,7 +101,7 @@
                         <h4><i>iii．</i>一种拓扑感知的多维通信调度方法</h4>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在大规模并行训练中，混合并行策略虽能有效支撑大规模参数智能模型训练的扩展，但仍面临挑战。一方面，若模型切分不合理，容易导致流水线执行过程中各设备间内存负载严重不均；另一方面，梯度同步通信往往集中在流水线迭代边界处突发进行，引发设备等待，降低整体计算效率。现有方法通常孤立地处理通信或内存问题，缺乏对二者协同优化的统一目标，难以在有限硬件资源下兼顾高吞吐与低内存占用。</p>
                         <div style="text-align: center; margin: 10px 0;">
-                            <img src="fig/HIPPLE.png" alt="混合并行训练的通信内存联合优化技术HIPPIE" style="max-width: 40%; border: 0px solid #ccc; padding: 5px;">
+                            <img src="tags/HIPPLE.png" alt="混合并行训练的通信内存联合优化技术HIPPIE" style="max-width: 40%; border: 0px solid #ccc; padding: 5px;">
                             <p style="font-style: italic; color: #666;">图3：混合并行训练的通信内存联合优化技术HIPPIE</p>
                         </div>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目研究提出了混合并行训练的通信内存联合优化技术HIPPIE。HIPPIE以内存效率为核心优化目标，将内存效率定义为吞吐量与扩展性乘积除以内存开销，从而为模型切分与调度提供统一的优化准则。HIPPIE基于层粒度对计算、内存和通信开销进行精细建模，自动搜索能够最大化内存效率的模型切分方案，并智能选择激活值检查点的位置，在节省内存的同时尽量减少额外计算开销。同时HIPPIE通过将梯度AllReduce通信操作提前至前向或反向计算过程中的空闲时段，巧妙地将其隐藏于流水线气泡之中，有效消除了通信等待时间。HIPPIE方法灵活兼容混合并行策略，便于在实际智能计算系统中高效横向扩展。实验结果表明，HIPPIE能实现超过90%的扩展效率，相较DAPPLE方法最高可提升并行训练吞吐量达80%，同时降低内存开销57%，内存效率提升高达4.18倍。该研究将内存效率确立为混合并行训练的首要优化目标，其自动化规划机制与通信隐藏策略为大规模训练提供了兼具高吞吐与低内存占用的实用解决方案。</p>
@@ -111,7 +111,7 @@
                         <h4><i>iv．</i>一种张量并行的通信数据依赖优化技术</h4>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在大规模智能模型训练中，张量并行通过将模型内部权重（例如矩阵乘法的行列维度）进行切分，有效降低了单个设备的内存占用，从而支持更大规模的模型部署。然而，这种切分方式引入了大量AllReduce通信操作，且这些通信与计算之间存在严格的数据依赖关系，例如，在前向或反向传播过程中，必须等待通信完成才能继续后续计算。在缺乏NVLink等高速互连的智能计算设备（如 RTX 3090 GPU）上，通信开销可占迭代时间的60%以上。现有张量并行优化方法尝试在单个算子内部内重叠通信与计算，未能充分挖掘跨越前向、重计算和反向等多个传播阶段的调度潜力。</p>
                         <div style="text-align: center; margin: 10px 0;">
-                            <img src="fig/Oases.png" alt="细粒度的跨传播阶段通信重叠技术Oases" style="max-width: 50%; border: 0px solid #ccc; padding: 5px;">
+                            <img src="tags/Oases.png" alt="细粒度的跨传播阶段通信重叠技术Oases" style="max-width: 50%; border: 0px solid #ccc; padding: 5px;">
                             <p style="font-style: italic; color: #666;">图4：细粒度的跨传播阶段通信重叠技术Oases</p>
                         </div>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目研究提出了一种细粒度的跨传播阶段通信重叠技术Oases，其核心是结合训练操作的流水线调度以实现通信隐藏，并结合自动化并行策略搜索系统性地优化张量并行训练性能。Oases通过将输入批次划分为多个子批次，使一个子批次的通信操作能够与另一个子批次的计算任务并行执行，打破传统训练流程中各阶段之间的严格顺序约束，从而实现更高效的资源利用。同时，Oases利用重计算阶段梯度传播的数学特性，即输入梯度与输出梯度在特定条件下等价，跳过重计算中冗余的通信操作，进一步减少不必要的同步开销。在此基础上，Oases还设计了一个精准的代价模型，用于评估不同调度方案下的通信重叠效果与内存消耗，并将张量并行的策略选择形式化为整数线性规划问题，自动求解出在满足内存约束前提下通信重叠最优的配置方案。实验表明，在多种主流GPU集群上，Oases相比Megatron-LM最高可实现1.95倍的并行训练吞吐量提高和2.18倍的设备利用率提升。该研究显著缓解了张量并行的通信瓶颈，其提出的训练操作流水线调度方法、跨传播重叠调度技术与自动化策略搜索机制，为张量并行在实际场景中的高效部署提供了重要的支撑。</p>
@@ -128,65 +128,10 @@
                         <p></p>
                         <p></p>
                         <p></p>
-                        <!-- <img class="gdoc-brand__img" src="fig/3i.png"  width=60 height=60> -->
 
                     </details>
 
 
-                        <!-- <p>为了提高机器学习训练的可扩展性，项目针对大规模智能模型的参数交换和数据依赖等特点展开分析研究，突破模型参数通信优化、高效并行策略构建和异构资源协同优化等关键技术。</p>
-                        <p>在通信优化方面，针对模型参数通信在大规模训练中面临的带宽瓶颈与同步延迟问题，项目探索了拓扑感知和稀疏感知的通信范式，并结合流水线调度实现通信隐藏，提高了模型参数的通信性能；在并行策略方面，为应对模型规模激增带来的内存与计算压力，项目突破了单一并行模式的限制，发展出适配不同模型结构与硬件资源的高效并行训练策略，提升了并行训练的效率；在异构协同方面，面向当前智能计算系统普遍存在的多类型加速器共存现状，项目建立了跨设备的任务映射、通信协调与负载均衡方法，有效提升了异构智能计算环境中的训练性能。</p> -->
-                        <!-- <ul>
-                            <li style="padding: 2px 0px;"> Feiyu Wang, Qiuheng Yin, Yixin Zhang, <span>&nbsp;</span><u>Tong Yang</u>. Foresight Indexing: Accelerating B+tree Index with Programmable Switches on the Network Path. <em><strong>IEEE INFOCOM 2026.</strong></em></li>
-                            <li style="padding: 2px 0px;"> Zhicheng Li, Pinghui Wang, Qiheng Song, Rundong Li, <span>&nbsp;</span><u>Tong Yang</u>, Qun Huang. ZRing: A Dynamic Sketch for Weighted Cardinality Estimation in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
-                            <li style="padding: 2px 0px;"> Zhuochen Fan, Zhongxian Liang, Zirui Liu, Dayu Wang, Dong Wen, Wenjun Li, <span>&nbsp;</span><u>Tong Yang</u>, Yuzhou Liu, Weizhe Zhang. PBSketch: Finding Periodic Burst Items in Data Streams. <em><strong>SIGKDD 2026.</strong></em></li>
-                            <li style="padding: 2px 0px;"> Mengbo Wang, Zhuochen Fan, Dayu Wang, Guorui Xie, Qing Li, Zeyu Luan, Yong Jiang, <span>&nbsp;</span><u>Tong Yang</u>, Mingwei Xu. RatioSketch: Towards More Accurate Frequency Estimation in Data Streams via a Lightweight Neural Network. <em><strong>AAAI 2026.</strong></em></li>
-                            <li style="padding: 2px 0px;"> Yuxuan Tian, Zihan Wang, Yebo Peng, Aomufei Yuan, Zhiming Wang, Bairen Yi, Xin Liu, Yong Cui, <span>&nbsp;</span><u>Tong Yang</u>. KeepKV: Achieving Periodic Lossless KV Cache Compression for Efficient LLM Inference. <em><strong>AAAI 2026.</strong></em></strong></em><span>&nbsp;</span><a href="/uploads/KeepKV_with_appendix.pdf" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">PDF Download</a></li>
-                        </ul> -->
-                        <!-- <p><a href='/news3.html' class="breadcrumb-link button">展示成果一</a></p> -->
-
-                <!-- <br clear="left" /> -->
-                    <!-- <div class="gdoc-page__anchorwrap"><h2 id="news"><strong>News:</strong><a data-clipboard-text="https://yangtonghome.github.io/#news" class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor <strong>News:</strong>" href="#news"><svg class="icon link"><use xlink:href="#link"></use></svg></a></h2></div>
-                    
-                    <details open="" style="margin-bottom: 10px;">
-                        <summary><b>News in 2025</b></summary>
-                        <ul>
-                            <li>
-                            <p>09/2025: 联合360研究团队发布 <strong>TinyR1-32B</strong> 模型——以仅<strong>20k</strong>数据实现<strong>安全性能里程碑式突破</strong>：超同尺寸 Qwen3-32B <strong>25分</strong>、超 DeepSeek-R1-0528 <strong>17分</strong>，推理性能达后者的<strong>93%</strong>；提出 <strong>Control Token</strong> 动态安全控制，打破安全与可用二选一困境，同步推出轻量安全模型 <strong>TinyR1-Safety-8B</strong>。<a href="https://huggingface.co/qihoo360/TinyR1-32B" target="_blank">[模型链接-32B]</a> <a href="https://huggingface.co/qihoo360/TinyR1-Safety-8B" target="_blank">[模型链接-8B]</a> <a href="https://mp.weixin.qq.com/s/5M9vO8gX3t7FwpmJQkO94g" target="_blank">[新闻链接]</a></p>
-                            </li>
-                            <li> 
-                            <p>08/2025: 研究团队发布<strong> iFairy </strong>——首个将全部参数约束在 {±1, ±i} 的 <strong>2-bit 复数量化大模型</strong>，实现<strong>无乘法、仅加法</strong>的高效推理与约<strong>1/8</strong>存储压缩，并在语言建模与下游任务上<strong>超越同尺寸全精度 LLaMA</strong>；相关论文及代码全面开源，进一步<strong>为低功耗与边缘部署提供新路径</strong>。<a href="https://github.com/PKULab1806/Fairy-plus-minus-i" target="_blank">[GitHub链接]</a> <a href="https://huggingface.co/PKU-DS-LAB/Fairy-plus-minus-i-700M" target="_blank">[模型链接]</a> <a href="https://arxiv.org/abs/2508.05571" target="_blank">[论文链接]</a> <a href="https://news.pku.edu.cn/xwzh/4940bc1077ff4acf933f3a59e5d85308.htm" target="_blank">[新闻链接]</a> <a href="https://media.githubusercontent.com/media/yangtonghome/yangtonghome.github.io/master/uploads/video/iFairyV2.mp4" target="__blank" class="md-opjjpmhoiojifppkkcdabiobhakljdgm_doc">[报告视频]</a></p>
-                            </li>
-                            <li> 
-                            <p>08/2025: 研究团队发布 <strong>Proof2Hybrid</strong>，为<strong>首个全自动数学基准合成架构</strong>。该架构以<strong>多大语言模型流水线</strong>为核心，实现数学评测集的自动、高效构建；并据此推出<strong>首个专注于代数几何领域</strong>的基准 <strong>AlgGeoTest</strong>。<a href="https://arxiv.org/abs/2508.02208" target="_blank">[论文链接]</a> <a href="https://huggingface.co/datasets/PKU-DS-LAB/AlgGeoTest" target="_blank">[数据集链接]</a></p> 
-                            </li>
-                            <li>
-                            <p>07/2025: 受邀担任<strong> CCF Computility 2025 “智算集群创新与实践” 论坛主席</strong>，论坛将于2025年7月在甘肃兰州举行，聚焦大模型训练推理中的智算基础设施发展与挑战。<a href="https://mp.weixin.qq.com/s/gVctHbQE7U1MsUOabsS1Gg" target="_blank">[报名链接]</a> </p>
-                            </li>
-                            <li>
-                            <p>06/2025: 研究团队发布 <strong>ScholarSearch</strong> 数据集，为<strong>首个专注于评估大语言模型在学术研究中复杂信息检索能力的基准</strong>。结果显示，即便是最强搜索增强模型 GPT-4o-search-preview 的准确率也仅为 18.83%。<a href="https://arxiv.org/abs/2506.13784" target="_blank">[论文链接]</a> <a href="https://huggingface.co/datasets/PKU-DS-LAB/ScholarSearch" target="_blank">[数据集链接]</a></p>
-                            </li>
-                            <li>
-                            <p>05/2025: 研究团队发布 <strong>FairyR1-32B</strong> 模型，采用“分合蒸馏”思路，实现在<strong>仅 5% 参数量下，数学与代码能力超越 DeepSeek-R1 满血版</strong>，充分探索在有限资源下实现高性能模型的可行性。<a href="https://huggingface.co/PKU-DS-LAB/FairyR1-32B" target="_blank">[模型链接]</a> </p>
-                            </li>
-                            <li>
-                            <p>02/2025: 联合360研究团队发布 <strong>Tiny-R1-32B-Preview</strong> 模型，以仅 5% 参数逼近 DeepSeek-R1-671B 的性能，在数学、代码、科学三大领域全面领先 Deepseek 70B模型。<a href="https://huggingface.co/qihoo360/TinyR1-32B-Preview" target="_blank">[模型链接]</a></p>
-                            </li>
-                        </ul>
-                    </details>
-                    
-                    <details open="" style="margin-bottom: 10px;">
-                        <summary><b>News in 2024</b></summary>
-                        <ul>
-                            <li style="padding: 2px 0px;">06/2024: Congratulations to <strong>Ruixin Wang</strong> for being awarded the <strong>Outstanding Graduate of Beijing City</strong>!</li>
-                            <li style="padding: 2px 0px;">06/2024: Congratulations to <strong>Yuhan Wu</strong> for being awarded the <strong>President's Scholarship</strong> of PKU!</li>
-                            <li style="padding: 2px 0px;">06/2024: Congratulations to <strong>Fenghao Dong</strong> for being admitted to the PhD program at <strong>CMU</strong>!</li>
-                            <li style="padding: 2px 0px;">06/2024: Congratulations to <strong>Xiuqi Zheng</strong> for being admitted to the Master's program at <strong>CMU</strong>!</li>
-                            <li style="padding: 2px 0px;">06/2024: Congratulations to <strong>Jianan Ji</strong> for being admitted to the Master's program at <strong>CMU</strong>!</li>
-                            <li style="padding: 2px 0px;">06/2024: Congratulations to <strong>Siyuan Dong</strong> for being admitted to the PhD program at <strong>University of Michigan</strong>!</li>
-                            <li style="padding: 2px 0px;">06/2024: Congratulations to <strong>Wei Zhou</strong> for being admitted to the Master's program at <strong>USC</strong>!</li>
-                            <li style="padding: 2px 0px;">06/2024: Congratulations to <strong>Zhouran Shi</strong> for being admitted to the Master's program at <strong>HKUST</strong>!</li>
-                        </ul>
-                    </details> -->
 
                 </article>
 
