@@ -101,6 +101,21 @@
                         </div>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目研究提出了高效微批次GNN训练系统PDGNN，以内存优化为核心目标，通过度剪枝分区和依赖感知冗余消除技术，显著降低峰值内存占用并加速训练。PDGNN首先引入基于度剪枝的图划分策略，针对幂律分布特性，从全批次的多级二分图中移除高度顶点以简化并稀疏化图结构，然后应用Metis高效划分简化图。其次，PDGNN提出依赖感知冗余匹配与消除技术，利用层间依赖自动传播匹配，从早期隐藏层开始匹配冗余顶点，通过近似TSP求解器优化微批次执行顺序以最大化相邻批次间冗余；然后在智能加速器上缓存并复用冗余顶点的中间嵌入，消除冗余计算，同时保持模型准确性。实验结果表明，在多种数据集上，PDGNN相较Betty和Auto-Divide实现最高3.5倍的端到端训练加速，同时降低46%的峰值智能加速器内存、64%的CPU内存，并维持收敛精度。该研究系统性挖掘了微批次GNN训练场景下内存优化的潜力，为低开销、高效冗余消除的图处理提供了新范式。</p>
 
+                        <h4>(3)一种通信优化的分布式图神经网络训练技术</h4>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在分布式异构架构上的大规模图神经网络训练中，现有框架面临显著的通信和数据传输瓶颈。首先，批次采样过程中的随机内存访问导致数据局部性差，采样时间开销大，在分布式环境中，邻域扩展往往引发跨机器数据访问，产生大量通信开销，限制系统可扩展性。其次，特征聚合阶段的CPU到智能加速器数据传输冗余严重，高维顶点特征进一步加剧PCIe传输瓶颈，而现有缓存策略受限于智能加速器内存和命中率，无法充分减少冗余传输。最后，分布式设置下，图划分不当会放大通信成本，现有方法虽尝试限制邻域扩展，但可能丢失图信息或增加训练难度，难以在有限资源下兼顾高效通信与低延迟。</p>
+                        <div style="text-align: center; margin: 10px 0;">
+                            <img src="tags/2PGraph.png" alt="一种通信优化的分布式图神经网络训练技术2PGraph" style="max-width: 75%; border: 0px solid #ccc; padding: 5px;">
+                            <p style="font-style: italic; color: #666;">图3：一种通信优化的分布式图神经网络训练技术2PGraph</p>
+                        </div>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目研究提出了适应大型图的分布式图神经网络训练系统2PGraph，以通信优化为核心目标，通过局部性感知调度、层感知缓存和自依赖分区等技术，显著降低跨设备数据交换和传输开销。2PGraph首先引入图局部性感知的顶点调度策略，根据图拓扑聚类信息重新排列训练顶点，使采样和聚合优先处理密集连接的顶点簇，提高数据访问局部性，减少随机访问并限制邻域扩展；在分布式环境中，此策略结合聚类和顶点置乱，确保随机性同时最小化跨机器通信。为进一步优化数据传输，2PGraph提出图神经网络层感知的动态特征缓存机制，在智能加速器上预缓存相关层特征分区，减少CPU-智能加速器冗余传输。2PGraph还结合自依赖图划分与聚类划分方法，最小化切割边并确保每个分区内信息完整，从而避免采样和聚合过程中的跨机器图数据交换，减少跨节点通信开销。实验结果表明，在8-智能加速器集群上，2PGraph相较DGL和PyG实现最高8.7倍加速，同时保持收敛精度。该研究将通信最小化确立为分布式GNN训练的核心优化路径，其自适应分区与层感知缓存策略为大规模图计算提供了高效、低通信的实用解决方案。</p>
+
+                        <h4>(4)一种基于NUMA架构感知的图计算优化算法</h4>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NUMA架构下的并行图计算是处理大规模图数据的关键技术路径，其核心挑战在于如何协同多核处理器与非均匀内存访问特性，以高效执行以遍历为核心的图算法（如BFS、SSSP、CC、PageRank）。传统分布式图系统虽能扩展至多机，但引入了高昂的跨机通信、负载不均与数据复制开销，未能充分利用单机多NUMA节点的硬件潜力。而既有的NUMA-aware多核图系统（如Polymer、Grazelle等）为优化远程内存访问，往往依赖复杂的图划分与顶点复制等预处理步骤，导致显著的预处理延迟与内存放大，使其难以高效处理亿级规模的大图。</p>
+                        <div style="text-align: center; margin: 10px 0;">
+                            <img src="tags/vGraph.png" alt="一种基于NUMA架构感知的图计算优化算法vGraph" style="max-width: 75%; border: 0px solid #ccc; padding: 5px;">
+                            <p style="font-style: italic; color: #666;">图4：一种基于NUMA架构感知的图计算优化算法vGraph</p>
+                        </div>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为此，本研究提出了面向NUMA架构的轻量级并行图处理系统vGraph。其核心思路在于摒弃以“最小化跨NUMA访问”为目标的繁重预处理，转而采用极简的流水线化图加载与压缩方案，消除排序、索引与复制等开销。系统将图数据按NUMA节点切分为多个子图结构（sub-CSR/CSC），使每个顶点的拓扑信息与状态数据均驻留于其所属节点的本地内存中，从而在保持数据局部性的同时极大降低峰值内存占用。此外，vGraph通过进程级NUMA绑定、轻量推送缓冲区与异步预取等机制，进一步隐藏访存延迟并提升多核并行效率。实验结果表明，在384GB内存的四NUMA节点平台上，vGraph能够高效处理包含百亿量级边的大规模真实与合成图。相比Polymer、GraphIt、Grazelle及S-Gemini等系统，vGraph在BFS、CC、SSSP、PageRank等典型遍历算法上实现了数量级的内存效率提升与显著的端到端加速。该研究为NUMA架构下的高吞吐、低延迟图计算提供了一种轻量化、内存友好的系统实现范式，拓宽了单机处理超大规模图数据的可行边界。</p>
                     <!-- </details> -->
                     
 
@@ -108,7 +123,7 @@
                     <ol>
                         <li style="padding: 2px 0px;"> Lizhi Zhang, Menghan Jia, Ping Gong, Zhiquan Lai, Dongsheng Li, Yongquan Fu, Ao Shen, Kai Lu. <a href="https://dl.acm.org/doi/full/10.1145/3767325">PDGNN: Efficient Micro-batch GNN Training via Degree-Pruned Partitioning and Redundancy Elimination.</a> <em><strong>ACM TACO 2025.</strong></em></li>
 
-                        <li style="padding: 2px 0px;"> Xinbiao Gan, Tiejun Li, Chunye Gong, Dongsheng Li, Dezun Dong, Jie Liu, Kai Lu. <a href="https://ieeexplore.ieee.org/abstract/document/10361608">GraphCSR: A Degree-Equalized CSR Format for Large-Scale Graph Processing.</a> <em><strong>ACM VLDB 2025.</strong></em></li>
+                        <li style="padding: 2px 0px;"> Xinbiao Gan, Tiejun Li, Chunye Gong, Dongsheng Li, Dezun Dong, Jie Liu, Kai Lu. <a href="https://ieeexplore.ieee.org/abstract/document/10361608">GraphCSR: A Degree-Equalized CSR Format for Large-Scale Graph Processing.</a> <em><strong>VLDB 2025.</strong></em></li>
                         <li style="padding: 2px 0px;"> Jiezhong He, Menghan Jia, Yixin Chen, Zhouyang Liu, Dongsheng Li. <a href="https://dl.acm.org/doi/full/10.1145/3771286">GTSM: A multi-edge-centric temporal subgraph matching framework on GPUs.</a> <em><strong>ACM TACO 2025.</strong></em></li>
                     
                         <li style="padding: 2px 0px;"> Menghan Jia, Yiming Zhang, Xinbiao Gan, Dongsheng Li, Erci Xu, Ruibo Wang, Kai Lu. <a href="https://ieeexplore.ieee.org/abstract/document/10046098">vGraph: Memory-Efficient Multicore Graph Processing for Traversal-Centric Algorithms.</a> <em><strong>IEEE SC 2022.</strong></em></li>
