@@ -70,23 +70,6 @@
                 <article class="gdoc-markdown">
                 
                     <div class="gdoc-page__anchorwrap"><h2 id="research"><strong>（五）智能模型分布式训练的优化算法</strong></h2></div>
-                    <!-- <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;面向国产平台的大规模分布式训练瓶颈通常沿两条主线出现：一是存储受限决定大规模智能模型能否落地训练；二是通信带宽受限决定多机多卡协同能否高效稳定。尤其在带宽紧张与网络波动的现实条件下，工程上常见的异步更新、延迟传输并非额外的复杂性，而是通信受限下为了维持吞吐与可用性必然引入的机制选择。由此，本部分研究按“存储受限（能训）”到“通信受限（少传但有效）”再到“理论保证（泛化有保障）”的链条组织展开：前两点给出可落地的算法机制，第三点为前两点在真实系统条件下提供统一的泛化保证与可操作的风险控制准则。</p>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目组在训练算法方面不仅提出了新方法，更给出了这些方法在复杂分布式系统约束下为何有效、如何可控的系统性回答，为下一代高效、可靠、可扩展的面向国产平台的分布式训练奠定了方法基础。</p> -->
-                    
-                    <!-- <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为提高大规模智能模型分布式训练的效率与可扩展性，项目从去中心化通信架构、异步更新鲁棒性、通信受限优化及混合精度训练四个维度展开深入研究，突破了传统同步训练模式在通信、稳定性与资源效率上的瓶颈。</p>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在去中心化通信架构与拓扑感知方面，针对全局同步代价高的问题，项目创新性地提出以随机游走为核心的令牌驱动更新机制，将计算与通信解耦为串联的轻量流程，适配拓扑受限与不稳定环境，并引入自适应学习率与动量增强稳定性。同时，将联邦学习的中心服务器聚合改造为网络内协商聚合，结合动量与量化技术，在缓解单点瓶颈的同时降低通信开销。更进一步，项目构建了拓扑与相关采样耦合的统一分析框架，揭示了采样相关性与拓扑扩散速度共同影响收敛性能的规律，为去中心化训练在非独立同分布数据场景下的应用提供了理论指导与实践验证。</p>
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在通信受限优化与混合精度训练方面，项目针对带宽瓶颈提出了系统性的低比特压缩、选择性聚合与预测式更新方法。通过将动量机制与符号级更新结合，保障了低比特训练在更弱条件下的理论收敛性；通过筛选对全局目标贡献更大的梯度进行聚合，提升了每轮通信的有效性；通过基于优化器机理的权重预测，减少了达到目标精度所需的迭代与通信轮次。此外，项目重新审视了低精度训练的价值，提出逐层降精度策略，不仅降低了计算开销与显存占用，还利用其固有的正则化效应提升了模型的泛化能力，实现了资源效率与模型性能的协同优化。</p> -->
-    
-                    
-
-
-
-
-                    <!-- <details open="" style="margin-bottom: 30px;">
-                        <summary><b>一种数据流融合稀疏神经网络加速器体系结构</b></summary> -->
-                        
-                        <!-- <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大规模智能模型训练中单一并行策略已难以兼顾日益增长的模型规模、复杂的模型结构与多样化硬件资源配置之间的复杂权衡。随着模型参数规模的高速增长，训练过程不仅面临单设备显存不足的瓶颈，还需在不同规模的智能计算集群上高效利用计算、内存与通信资源。此外，新型模型架构引入了多种模块结构与动态参数状态，如混合专家模型因路由机制导致各设备负载动态不均，以及多模态模型由编码模块、投影模块与主干模型等结构差异显著的模块组成，并行训练的优化方法难以有效适配。同时，大规模智能模型的并行训练普遍依赖人工设计的固定并行策略，缺乏对模型结构、集群规模与运行时状态的联合感知能力，既限制了资源利用率，又增加了开发与调优成本。</p>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;围绕上述问题，项目系统性地开展了多维并行训练的自动化协同优化、细粒度的负载均衡优化以及自适应的并行训练策略生成等研究，形成了通用、高效且可扩展的大规模智能模型并行训练技术。相关研究发表于TPDS、TC、TACO等国际期刊与会议。相关软件代码在GitHub、GitLink平台进行了开源，公开项目名称为“Merak”。</p> -->
                         <h4>(1)随机游走式去中心化信息传播与优化协同</h4>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;面向大规模分布式训练中全局同步代价高的现实约束，项目提出一种以随机游走为核心的信息传播方式：网络中不再依赖所有节点同时交换参数或频繁全网平均，而是让训练过程由一个在拓扑上不断移动的更新令牌驱动，令牌走到哪个节点，就由该节点完成一次局部计算并推动一次模型更新，然后把必要的训练状态沿网络边传递到下一个节点。这样一来，通信与计算被串联成更轻量、更灵活的流程：每一步只发生一次局部计算和一次邻接传输，天然适配拓扑受限、通信不稳定或难以同步的去中心化环境。</p>
                         <div style="text-align: center; margin: 10px 0;">
@@ -131,15 +114,7 @@
                         <li style="padding: 2px 0px;"> Tao Sun, Dongsheng Li, Bao Wang. <a href="https://ieeexplore.ieee.org/abstract/document/9850408">Decentralized Federated Averaging.</a> <em><strong>IEEE TPAMI 2023.</strong></em></li>
                         <li style="padding: 2px 0px;"> Tao Sun, Dongsheng Li, Bao Wang. <a href="https://proceedings.mlr.press/v162/sun22b.html">Adaptive Random Walk Gradient Descent for Decentralized Optimization.</a> <em><strong>ICML 2022.</strong></em></li>
 
-                        <!-- <li style="padding: 2px 0px;"> Zhiquan Lai, Shengwei Li, Xudong Tang, Keshi Ge, Weijie Liu, Yabo Duan, Linbo Qiao, Dongsheng Li. <a href="https://ieeexplore.ieee.org/abstract/document/10049507/">Merak: An Efficient Distributed DNN Training Framework With Automated 3D Parallelism for Giant Foundation Models.</a> <em><strong>IEEE TPDS 2023.</strong></em></li> -->
-                        
-
-                        
-                        <!-- <li style="padding: 2px 0px;"> Yu Tang, Lujia Yin, Qiao Li, Hongyu Zhu, Hengjie Li, Xingcheng Zhang, Linbo Qiao, Dongsheng Li, Jiaxin Li. <a href="https://dl.acm.org/doi/abs/10.1145/3722113">Koala: Efficient Pipeline Training through Automated Schedule Searching on Domain-Specific Language.</a> <em><strong>ACM TACO 2025.</strong></em></li> -->
-                        <!-- <li style="padding: 2px 0px;"> Weijie Liu, Kai Lu, Zhiquan Lai, Shengwei Li, Keshi Ge, Dongsheng Li, Xicheng Lu. <a href="https://ieeexplore.ieee.org/abstract/document/10803065">AutoPipe-H: A Heterogeneity-Aware Data-Paralleled Pipeline Approach on Commodity GPU Servers.</a> <em><strong>IEEE TC 2025.</strong></em></li> -->
-                        
-                        <!-- <li style="padding: 2px 0px;"> Shengwei Li, Qiaoling Chen, Zhiquan Lai, Penglong Jiao, Wenwen Qu, Kun Cai, Jiaxing Li, Peng Sun, Xingcheng Zhang, Xiaoge Deng, Dongsheng Li, Kai Lu, Tianwei Zhang. <a href="https://www.usenix.org/conference/nsdi26">Di-PS: System-Algorithm Co-Design for Asynchronous and Heterogeneous Cross-cluster LLM Training at Scale.</a> <em><strong>USENIX NSDI 2026.</strong></em></li> -->
-                        
+                      
                     </ol>
 
                 </article>
