@@ -96,13 +96,22 @@
                     </div>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目研究提出了一种融合稀疏表示与草图近似的通信压缩技术S2Reducer。如图 1所示，S2Reducer采用混合稀疏与草图表示对通信的梯度数据进行双重压缩，即先通过自适应阈值筛选出显著梯度分量予以精确保留，再将剩余大量小幅值梯度聚合后以计数草图形式进行紧凑近似，从而在极低通信开销下保留梯度的整体统计特性。此外，为确保训练收敛性，S2Reducer引入严格的误差控制机制，通过理论分析推导出压缩误差的上界，并据此动态调节稀疏率与草图容量，在压缩强度与模型精度之间实现自适应平衡。同时实现采用零拷贝设计，直接在通信缓冲区内完成压缩与聚合操作，规避了额外的数据移动开销。实验表明，与OmniReduce方法相比，S2Reducer可以减少约65%的通信时间，实现了1.8 倍的训练性能提高。该研究突破了梯度压缩方法在效率与精度的权衡困境，将稀疏选择与草图近似有机结合，为智能计算系统提供了实用高效的通信优化方案。</p>
                     
-                    <h4>(4)一种动态细粒度的异构数据交换技术</h4>
+                    <h4>(4)一种面向分布式智能计算的数据去冗余技术</h4>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在分布式智能训练中，周期性的存储检查点是容错的核心。智能模型检查点的所需存储空间可达数TB，其数据的传输和写入将对持久化存储系统造成巨大压力。分布式计算本身蕴含了内在冗余，由于数据并行、模型并行或流水线并行等策略的引入，多个计算节点往往持有部分相同或可推导的模型检查点状态信息，若不加区分地全量保存，将导致大量重复数据被冗余写入，造成存储与带宽资源的双重浪费。</p>
+                    <div style="text-align: center; margin: 10px 0;">
+                        <img src="tags/adacheck.png" alt="冗余感知的智能模型检查点存储技术AdaCheck" style="max-width: 65%; border: 0px solid #ccc; padding: 5px;">
+                        <p style="font-style: italic; color: #666;">图2：冗余感知的智能模型检查点存储技术AdaCheck</p>
+                    </div>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;为系统性应对这一问题，项目研究提出了一种冗余感知的自适应检查点存储技术AdaCheck。AdaCheck首先形式化定义了由不同并行策略和模型架构所引发的状态冗余，并将其建模为图结构上的遍历问题，从而为冗余识别提供理论基础。在此基础上，AdaCheck设计了高效的离线冗余检测机制，通过一致性哈希比对与环状通信算法，精准定位可安全省略的冗余数据，避免无效存储。为进一步压缩检查点体积，系统引入在线增量机制，仅记录优化器状态在训练步之间的变化量而非完整快照，大幅降低数据写入量。实验结果表明，AdaCheck可将智能模型的检查点体积缩减达6至896倍。该研究揭示并解决了分布式智能计算中的模型状态冗余问题，为大规模智能计算的高效容错提供了切实可行的创新路径。</p>
+
+                    <h4>(5)一种动态细粒度的异构数据交换技术</h4>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;随着智能模型规模的高速增长，单个设备的存储空间已成为智能计算的重要瓶颈。以重计算和内存交换为代表的降低存储开销技术被相继提出，然而重计算通常以整层为单位进行粗粒度的保留或重计算决策，难以充分挖掘细粒度的内存节省空间，而内存交换技术多依赖简单的缓存替换策略，忽视了计算依赖关系，导致频繁且不必要的数据交换。同时这些方法往往被独立设计并使用，难以在有限硬件资源下实现性能与降低存储开销的联合最优。</p>
                     <div style="text-align: center; margin: 10px 0;">
                         <img src="tags/DELTA.png" alt="面向智能模型的动态细粒度重计算与交换技术DELTA" style="max-width: 65%; border: 0px solid #ccc; padding: 5px;">
-                        <p style="font-style: italic; color: #666;">图2：面向智能模型的动态细粒度重计算与交换技术DELTA</p>
+                        <p style="font-style: italic; color: #666;">图3：面向智能模型的动态细粒度重计算与交换技术DELTA</p>
                     </div>
                     <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目研究提出了一种面向智能模型的动态细粒度重计算与交换技术DELTA。DELTA将存储开销与计算性能的联合优化问题形式化为带约束的0/1背包问题，综合考虑每个张量数据的存储开销、重计算成本以及交换延迟，并通过高效的贪心算法求解出全局近优的策略组合。在此基础上，DELTA设计了双向预取机制，通过在异构多级存储之间建立协同管理的 FIFO 队列，使数据交换与计算过程高度重叠，有效隐藏通信延迟。同时DELTA的细粒度决策引擎突破了以模型层为单位的优化粒度，能够基于存储开销、计算开销与交换开销，对每个张量独立决策最优存储策略，从而在保障计算效率的同时最大化存储利用率。实验表明，DELTA相比于DTR、POET等方法，可将存储占用至多降低72.3%并维持超过90% 的扩展效率。该研究将重计算与内存交换技术统一于同一框架下，通过细粒度决策显著提升了单设备存储利用效率，为大规模的智能应用提供了关键技术支撑。</p>
+
 
                     <!-- </details> -->
                     
@@ -116,7 +125,7 @@
                     
                         <!-- <li style="padding: 2px 0px;"> Yiming Zhang, Li Wang, Shengyun Liu, Shun Gai, Haonan Wang, Xin Yao, Meiling Wang, Kai Chen, Dongsheng Li, Jiwu Shu. <a href="https://dl.acm.org/doi/abs/10.1145/3689031.3696080">Cheetah: Metadata Aggregation for Fast Object Storage without Distributed Ordering</a> <em><strong>ACM EuroSys 2025.</strong></em></li> -->
                         
-                        
+                        <li style="padding: 2px 0px;"> Keshi Ge, Kai Lu, Yongquan Fu, Xiaoge Deng, Zhiquan Lai, Dongsheng Li. <a href="https://ieeexplore.ieee.org/document/10050389"> Compressed Collective Sparse-Sketch for Distributed Data-Parallel Training of Deep Learning Models. </a> <em><strong>IEEE JSAC 2023.</strong></em></li>
                         <li style="padding: 2px 0px;"> Yu Tang, Qiao Li, Lujia Yin, Dongsheng Li, Yiming Zhang, Chenyu Wang, Xingcheng Zhang, Linbo Qiao, Zhaoning Zhang, Kai Lu. <a href="https://dl.acm.org/doi/abs/10.1145/3722113">DELTA: Memory-Efficient Training via Dynamic Fine-Grained Recomputation and Swapping.</a> <em><strong>ACM TACO 2024.</strong></em></li>
                         <!-- <li style="padding: 2px 0px;"> Weijie Liu, Kai Lu, Zhiquan Lai, Shengwei Li, Keshi Ge, Dongsheng Li, Xicheng Lu. <a href="https://ieeexplore.ieee.org/abstract/document/10803065">AutoPipe-H: A Heterogeneity-Aware Data-Paralleled Pipeline Approach on Commodity GPU Servers.</a> <em><strong>IEEE TC 2025.</strong></em></li> -->
                         
