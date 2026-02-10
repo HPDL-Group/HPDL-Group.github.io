@@ -87,31 +87,47 @@
                         
                         <!-- <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大规模智能模型训练中单一并行策略已难以兼顾日益增长的模型规模、复杂的模型结构与多样化硬件资源配置之间的复杂权衡。随着模型参数规模的高速增长，训练过程不仅面临单设备显存不足的瓶颈，还需在不同规模的智能计算集群上高效利用计算、内存与通信资源。此外，新型模型架构引入了多种模块结构与动态参数状态，如混合专家模型因路由机制导致各设备负载动态不均，以及多模态模型由编码模块、投影模块与主干模型等结构差异显著的模块组成，并行训练的优化方法难以有效适配。同时，大规模智能模型的并行训练普遍依赖人工设计的固定并行策略，缺乏对模型结构、集群规模与运行时状态的联合感知能力，既限制了资源利用率，又增加了开发与调优成本。</p>
                         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;围绕上述问题，项目系统性地开展了多维并行训练的自动化协同优化、细粒度的负载均衡优化以及自适应的并行训练策略生成等研究，形成了通用、高效且可扩展的大规模智能模型并行训练技术。相关研究发表于TPDS、TC、TACO等国际期刊与会议。相关软件代码在GitHub、GitLink平台进行了开源，公开项目名称为“Merak”。</p> -->
-                        
-                        <h4>(1)异步去中心化 SGD 的稳定性与泛化分析框架</h4>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;针对去中心化训练中常见的组间不同步问题，项目从学习理论角度建立了异步去中心化随机梯度下降的稳定性与泛化分析框架。与传统只关注收敛速度不同，该工作把训练过程是否稳定作为核心刻画对象：当分布式系统中某个样本发生轻微变化时，最终模型会发生多大变化；模型对这种扰动越不敏感，泛化就越可靠。基于这一思路，项目系统地把拓扑结构下的参数混合过程、组间异步带来的更新滞后、学习率与训练轮数等因素放进统一分析链条，给出异步去中心化训练在什么条件下更稳、在什么条件下风险上升的清晰结论。</p>
+                        <h4>(1)随机游走式去中心化信息传播与优化协同</h4>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;面向大规模分布式训练中全局同步代价高的现实约束，项目提出一种以随机游走为核心的信息传播方式：网络中不再依赖所有节点同时交换参数或频繁全网平均，而是让训练过程由一个在拓扑上不断移动的更新令牌驱动，令牌走到哪个节点，就由该节点完成一次局部计算并推动一次模型更新，然后把必要的训练状态沿网络边传递到下一个节点。这样一来，通信与计算被串联成更轻量、更灵活的流程：每一步只发生一次局部计算和一次邻接传输，天然适配拓扑受限、通信不稳定或难以同步的去中心化环境。</p>
                         <div style="text-align: center; margin: 10px 0;">
-                            <img src="tags/SGD.png" alt="异步去中心化 SGD 的在不同情况下的泛化误差界" style="max-width: 85%; border: 0px solid #ccc; padding: 5px;">
-                            <p style="font-style: italic; color: #666;">图1：异步去中心化 SGD 的在不同情况下的泛化误差界</p>
+                            <img src="tags/icml.jpg" alt="自适应随机游走和非自适应随机游走比较。可以发现当稀疏程度越高时(p越小时)，自适应效果越好" style="max-width: 85%; border: 0px solid #ccc; padding: 5px;">
+                            <p style="font-style: italic; color: #666;">图1：自适应随机游走和非自适应随机游走比较。可以发现当稀疏程度越高时(p越小时)，自适应效果越好</p>
                         </div>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该工作给出了一套能够指导工程取舍的规则，比如拓扑混合越弱、延迟越大、学习率越激进时，对泛化的压力会更大；相反，通过控制学习率策略、合理设定训练时长、利用更好的初始化，可以把异步带来的额外风险压到可控范围内。实验层面，论文在典型视觉数据集与多种去中心化拓扑设置下系统验证了这些规律，说明异步去中心化并不是只能靠经验赌效果，而是能够做出可解释设计的训练机制。</p>
-                        
-                        <h4>(2)低比特与压缩友好型优化算法的收敛保障</h4>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在分布式训练中，最直接的通信减负方式是把每次上传的梯度从高精度向量压缩成极少比特信息，但这类方法长期面临一个关键障碍：压缩后更新方向变粗糙，容易在噪声较大或小批量训练时出现不稳定甚至训练失败。项目从机制上抓住动量在深度学习训练中的稳定作用，把动量与符号级更新协同起来分析，证明加入简单动量后，算法在更弱条件下仍可收敛，不再依赖以往常见的强限制（例如要求随机梯度幅值始终有界、或必须不断增大批量才能稳定）。从而把低比特更新从“经验上能跑”提升为“理论上可解释、可保证”。同时还研究了在更强的平滑条件下，适当调整动量更新方式可以进一步提升理论收敛速度，并给出面向分布式与联邦场景的通信友好变体设计，使得在多机或联邦框架下传输仍保持符号级别的低开销。</p>
-                        <div style="text-align: center; margin: 10px 0;">
-                            <img src="tags/SmallBatch.png" alt="度修剪划分与依赖感知冗余消除的内存优化技术PDGNN" style="max-width: 85%; border: 0px solid #ccc; padding: 5px;">
-                            <p style="font-style: italic; color: #666;">图2：在小批量情况下带动量版本的压缩算法仍然收敛</p>
-                        </div>
-                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在实验层面，系统对比了不带动量的符号更新与带动量版本在不同批量大小下的表现，覆盖经典视觉模型与数据集设置。结果显示，小批量场景下普通符号更新更容易出现明显性能下滑，而加入动量后能保持更稳定的训练过程和更可靠的最终精度；此外在分布式与联邦式变体的实验中，也体现出“只传符号信息”仍能获得可用的学习效果。</p>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在算法设计上，进一步引入了自适应学习率和动量等机制，使得每次更新能够根据历史梯度信息自动调整更新强度，从而在噪声较大或梯度分布不均匀的场景中保持稳定。在理论方面，项目证明了当梯度呈现稀疏特征时，自适应机制能够带来更明确的效率优势，给通信受限或稀疏更新场景如何加速训练提供了可解释的理论支撑。在实验层面，该方法在多种设置下展示出有效性与稳健性，表明随机游走传播并非只是一种通信技巧，而是可以与优化器设计协同带来实际收益的去中心化训练方案。</p>
 
+                        <h4>(2)去中心化联邦聚合机制</h4>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;针对经典联邦学习普遍依赖中心服务器聚合带来的单点瓶颈、通信压力集中与潜在隐私风险，项目从架构层面将“服务器聚合”改造为“网络内协商聚合”：客户端之间以互连拓扑形成去中心化网络，每轮训练中，各节点先在本地执行多步模型更新，再通过与邻居节点的模型交换与平均实现群体层面的聚合效果，从而在没有中心服务器的情况下完成联邦学习的核心过程。这种范式在组织方式上更加分散，能够缓解中心节点成为性能瓶颈或故障点的问题，也更契合多机构协作、跨域节点互联、难以部署中心服务器的应用环境。</p>
+                        <div style="text-align: center; margin: 10px 0;">
+                            <img src="tags/tpami1.jpg" alt="去中心化联邦学习在通信方面的显著优势" style="max-width: 85%; border: 0px solid #ccc; padding: 5px;">
+                            <p style="font-style: italic; color: #666;">图2：去中心化联邦学习在通信方面的显著优势</p>
+                        </div>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在方法层面，项目进一步将动量机制引入去中心化联邦平均流程，增强训练的稳定性与收敛速度；同时，为了面向真实系统中的带宽限制，提出了量化版本，使得模型交换可以以更低通信代价完成。在理论方面，项目给出了去中心化联邦平均及其量化版本的收敛分析，说明在合理条件下其收敛性能可以对标常见的随机梯度方法与去中心化随机梯度方法。</p>
+                        
+                        <h4>(3)延迟 SGD 的可泛化性机理</h4>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;考虑到真实深度学习训练往往很难满足一些理想化条件，项目进一步把异步训练的泛化理论推向更可用、更贴近实践的层面。针对以往分析结论偏保守、对真实任务解释力不足的问题，从新的稳定性刻画出发，给出更紧、更有指导意义的异步训练泛化结论，并显著弱化了对强光滑、梯度全局有界等假设的依赖，使得分析能够覆盖更广泛的损失形式与训练场景。</p>
+                        <div style="text-align: center; margin: 10px 0;">
+                            <img src="tags/tpami2.jpg" alt="在小批量情况下带动量版本的压缩算法仍然收敛" style="max-width: 85%; border: 0px solid #ccc; padding: 5px;">
+                            <p style="font-style: italic; color: #666;">图3：在小批量情况下带动量版本的压缩算法仍然收敛</p>
+                        </div>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;该研究工作不仅回答异步会不会有害泛化，还进一步解释了工程实践中常见但难以用旧理论解释的现象：在合适的学习率与训练策略下，适度的更新滞后并不一定导致更差的测试表现，甚至可能表现出更强的稳定性，从而缓解过拟合倾向。实验部分在典型视觉任务与自然语言任务中做了系统对比，展示不同延迟水平、不同学习率策略下训练稳定性与测试误差的变化趋势，为“复杂并行训练场景下采用组间异步更新”的可用性提供更直接的证据链。</p>
+
+
+                        <h4>(4)更一般条件下的异步SGD训练算法泛化界</h4>
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目系统研究了异步训练在测试性能上的可靠性来源，形成了比既有工作更贴近真实训练的稳定性与泛化理论。这项工作聚焦一个十分重要的问题：当我们为了吞吐与效率引入异步更新甚至通信隐藏时，训练到底会不会变得更不可靠，风险能否被刻画并被策略性控制。在方法上，该工作不再沿用以往分析中常见的强前提条件，而是把关键难点从“对梯度做过强上界”转向“从训练过程本身能观测到的目标函数值与优化轨迹中提炼稳定性信息”，从而建立更紧、更有解释力的泛化上界。具体而言，以平均意义下的模型稳定性为核心刻画，给出在不依赖全局利普希茨条件时仍然有效、且不会沦为空泛结论的泛化界；进一步把泛化误差拆解为可解释的组成部分，明确揭示异步延迟、模型初始化质量、样本规模与训练迭代次数分别如何影响最终的泛化表现。</p>
+
+                        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;项目把分析推进到了以往很难覆盖的非光滑场景：当损失函数并不满足传统意义下的光滑性时，工作用更弱的连续性条件替代强光滑假设，仍然得到与光滑情形相近的稳定性与泛化结论，从而让理论能够覆盖更广泛的训练目标与模型结构。这一点对实际系统尤其关键，因为大模型训练中常见的分段结构、正则项与裁剪策略往往会引入非光滑特征。</p>
                     <!-- </details> -->
                     
 
                     <p><b>&nbsp;&nbsp;&nbsp;&nbsp;相关部分论文列表:</b></p>
                     <ol>
+                        <li style="padding: 2px 0px;"> Tao Sun, Dongsheng Li, Bao Wang. <a href="https://proceedings.mlr.press/v162/sun22b.html">Adaptive Random Walk Gradient Descent for Decentralized Optimization.</a> <em><strong>ICML 2022.</strong></em></li>
+                        <li style="padding: 2px 0px;"> Tao Sun, Dongsheng Li, Bao Wang. <a href="https://ieeexplore.ieee.org/abstract/document/9850408">Decentralized Federated Averaging.</a> <em><strong>IEEE TPAMI 2023.</strong></em></li>
+
+                        <li style="padding: 2px 0px;"> Xiaoge Deng, Li Shen, Shengwei Li, Tao Sun, Dongsheng Li. <a href="https://ieeexplore.ieee.org/document/11008843">Towards understanding the generalizability of delayed stochastic gradient descent.</a> <em><strong>IEEE TPAMI 2025.</strong></em></li>
+                        <li style="padding: 2px 0px;"> Xiaoge Deng, Tao Sun, Shengwei Li, Dongsheng Li, Xicheng Lu. <a href="https://dl.acm.org/doi/abs/10.5555/3737916.3738162">Stability and generalization of asynchronous SGD: sharper bounds beyond lipschitz and smoothness.</a> <em><strong>NeurIPS 2024.</strong></em></li>
+                        <li style="padding: 2px 0px;"> Xiaoge Deng, Tao Sun, Shengwei Li, Dongsheng Li. <a href="https://dl.acm.org/doi/abs/10.1609/aaai.v37i6.25894">Stability-based generalization analysis of the asynchronous decentralized SGD.</a> <em><strong>AAAI 2023.</strong></em></li>
                         <li style="padding: 2px 0px;"> Ping Luo, Xiaoge Deng, Ziqing Wen, Tao Sun, Dongsheng Li. <a href="https://ieeexplore.ieee.org/abstract/document/11053664">BHerd: Accelerating Federated Learning by Selecting Beneficial Herd of Local Gradients.</a> <em><strong>IEEE TC 2025.</strong></em></li>
-                        <li style="padding: 2px 0px;"> Xiaoge Deng, Tao Sun, Shengwei Li, Dongsheng Li, Xicheng Lu. <a href="https://dl.acm.org/doi/abs/10.5555/3737916.3738162">Stability and generalization of asynchronous SGD: sharper bounds beyond lipschitz and smoothness.</a> <em><strong>ACM NIPS 2024.</strong></em></li>
-                        <li style="padding: 2px 0px;"> Xiaoge Deng, Tao Sun, Shengwei Li, Dongsheng Li. <a href="https://dl.acm.org/doi/abs/10.1609/aaai.v37i6.25894">Stability-based generalization analysis of the asynchronous decentralized SGD.</a> <em><strong>ACM AAAI 2023.</strong></em></li>
                     
                         
                         <!-- <li style="padding: 2px 0px;"> Zhiquan Lai, Shengwei Li, Xudong Tang, Keshi Ge, Weijie Liu, Yabo Duan, Linbo Qiao, Dongsheng Li. <a href="https://ieeexplore.ieee.org/abstract/document/10049507/">Merak: An Efficient Distributed DNN Training Framework With Automated 3D Parallelism for Giant Foundation Models.</a> <em><strong>IEEE TPDS 2023.</strong></em></li> -->
